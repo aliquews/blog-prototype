@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %} 
+
+{% block content %}
+
+<h1>Комментарии к посту {{post}}</h1>
+<hr>
+{% for comment in post.comment_set.all %}
+<p>{% if user.username == comment.owner.username %}<a href="{% url 'delete-comment' comment.id %}"><button>Удалить</button></a>{%endif%} {{comment.owner}}</p>
+<p>{{comment.text}}</p>
+<p class="text-muted"><strong>Дата публикации: {{comment.posting_date}}</strong></p>
+{% endfor %}
+
+{% endblock %}

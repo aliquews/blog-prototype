@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Список пользователей</h1>
+<ul class="userlist">
+    {% for usr in user_list %}
+    {% if usr.last_name and usr.first_name %}
+    <li><a href="{% url 'user-detail' usr.username %}">@{{usr.username}} | {{usr.last_name}} {{usr.first_name}}</a></li>
+    {%else%}
+    <li><a href="{% url 'user-detail' usr.username %}">@{{usr.username}}</a></li>
+    {%endif%}
+    {%endfor%}
+</ul>
+{%endblock%} 

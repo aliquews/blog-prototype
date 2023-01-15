@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Новый комментарий к посту</h1>
+
+<div class="container py-5">
+	<h1>Новый комментарий</h1>
+	<form method="POST">
+		{% csrf_token %}
+		{{ form }}                    
+		<button class="btn btn-primary" type="submit">Отправить</button>
+	</form>
+</div>
+
+{% endblock %}

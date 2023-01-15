@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %} 
+
+{% block content %}
+<h1>Обзор</h1>
+<h3>
+    <li><strong>Пользователей всего: </strong>{{num_users}}</li>
+    <li><strong>Количество постов на сайте: </strong>{{num_posts}}</li>
+    
+</h3>
+    <p>Вы посетили эту страницу {{num_visits}} {% if visits_check %} раза {%else%} раз {%endif%}</p>
+{% endblock %}

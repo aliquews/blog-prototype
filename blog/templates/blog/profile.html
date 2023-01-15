@@ -1,0 +1,33 @@
+{% extends "base_generic.html" %} 
+
+{% block content %} 
+
+<h1>Пользователь {{user_detail.username}}</h1>
+{% if user_detail.first_name and user_detail.last_name %}
+<h2>{{user_detail.last_name}} {{user_detail.first_name}}</h2>
+{%endif%}
+<br>
+<br>
+{%if user_detail.post_set.all %}
+<h1>Посты</h1>
+<hr>
+
+{% if user_detail.username == user.username %}
+<a href="{% url 'create-post' user.username %}"><button>Новый пост</button></a>
+<hr>
+{%endif%}
+{% for post in user_detail.post_set.all %}
+<p><strong>{%if user_detail.username == user.username %}<a class="delete" href="{% url 'delete-post' post.id %}"><button>Удалить</button></a>{%endif%} {{post.header}}</strong></p>
+<p class="text-muted">{{post.text}}</p>
+<p><strong>Дата публикации: {{post.posting_date}}</strong></p>
+<a href="{% url 'new-comment' post.id %}"><button>Оставить комментарий</button></a> <a href="{% url 'post-detail' post.id%}"><button>Посмотреть комментарии</button></a>
+<hr>
+{%endfor%}
+{%else%}
+<h1>Здесь пока нет постов</h1>
+{% if user_detail.username == user.username %}
+<a href="{% url 'create-post' user.username %}"><button>Создать</button></a>
+{%endif%}
+{%endif%}
+
+{% endblock %}
