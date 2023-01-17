@@ -1,10 +1,13 @@
-{% extends "base_generic.html" %} 
+{% extends "base_generic.html" %}
 
-{% block content %} 
+{% block content %}
 
 <h1>Пользователь {{user_detail.username}}</h1>
 {% if user_detail.first_name and user_detail.last_name %}
 <h2>{{user_detail.last_name}} {{user_detail.first_name}}</h2>
+{%endif%}
+{% if user.is_authenticated and user.username != user_detail.username %}
+<a href="{% url 'room' user_detail.username %}"><button class="btn btn-primary">Отправить сообщение</button></a>
 {%endif%}
 <br>
 <br>
@@ -13,14 +16,16 @@
 <hr>
 
 {% if user_detail.username == user.username %}
-<a href="{% url 'create-post' user.username %}"><button>Новый пост</button></a>
+<a href="{% url 'create-post' user.username %}"><button class="btn btn-primary">Новый пост</button></a>
 <hr>
 {%endif%}
 {% for post in user_detail.post_set.all %}
-<p><strong>{%if user_detail.username == user.username %}<a class="delete" href="{% url 'delete-post' post.id %}"><button>Удалить</button></a>{%endif%} {{post.header}}</strong></p>
+<p><strong>{%if user_detail.username == user.username %}<a class="delete" href="{% url 'delete-post' post.id %}"><button
+                class="btn btn-primary">Удалить</button></a>{%endif%} {{post.header}}</strong></p>
 <p class="text-muted">{{post.text}}</p>
 <p><strong>Дата публикации: {{post.posting_date}}</strong></p>
-<a href="{% url 'new-comment' post.id %}"><button>Оставить комментарий</button></a> <a href="{% url 'post-detail' post.id%}"><button>Посмотреть комментарии</button></a>
+<a href="{% url 'new-comment' post.id %}"><button class="btn btn-primary">Оставить комментарий</button></a> <a
+    href="{% url 'post-detail' post.id%}"><button class="btn btn-primary">Посмотреть комментарии</button></a>
 <hr>
 {%endfor%}
 {%else%}

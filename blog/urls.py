@@ -3,7 +3,7 @@ from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
-    path('',views.index, name='index'),
+    path('',views.index, name='home'),
     re_path(r'^author/(?P<slug>[-\w]+)/$', views.UserDetailView.as_view(), name='user-detail'),
     re_path(r'authors/$', views.UserListView.as_view(), name='users'),
     re_path(r'^author/(?P<slug>[-\w]+)/post/new$',views.PostCreateView.as_view(), name='create-post'),

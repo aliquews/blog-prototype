@@ -5,23 +5,26 @@ from django.urls import reverse_lazy
 from django.contrib.auth import login
 
 from . import models
+import blog_chat.models as chatmodels
 from . import forms
+
 
 def index(request: HttpRequest):
 
     num_visits = request.session.get('num_visits', 0)
     num_users = models.CustomUser.objects.all().count()
     num_posts = models.Post.objects.all().count()
-    visits_check = (num_visits < 10 or num_visits > 20) and num_visits % 10 in [2,3,4]
+    visits_check = (num_visits < 10 or num_visits >
+                    20) and num_visits % 10 in [2, 3, 4]
     request.session['num_visits'] = num_visits+1
     return render(
         request,
         'blog/index.html',
-        context = {
+        context={
             'num_users': num_users,
             'num_posts': num_posts,
             'num_visits': num_visits,
-            'visits_check':visits_check,
+            'visits_check': visits_check,
         },
     )
 
@@ -42,49 +45,50 @@ class UserListView(ListView):
     def get_queryset(self):
         return models.CustomUser.objects.all()
 
+
 class PostCreateView(CreateView):
     model = models.Post
     template_name = 'blog/create_post.html'
     fields = ['header', 'text']
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('home')
+
     def form_valid(self, form):
         fields = form.save(commit=False)
-        fields.owner = models.CustomUser.objects.get(username=self.request.user.username)
+        fields.owner = models.CustomUser.objects.get(
+            username=self.request.user.username)
         return super().form_valid(form)
-    
+
 
 class CommentCreateView(CreateView):
     model = models.Comment
     template_name = 'blog/create_comment.html'
     fields = ['text']
-    success_url = reverse_lazy('index')
-    
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         fields = form.save(commit=False)
-        fields.owner = models.CustomUser.objects.get(username=self.request.user.username)
+        fields.owner = models.CustomUser.objects.get(
+            username=self.request.user.username)
         fields.post = models.Post.objects.get(id=self.kwargs['pk'])
         fields.save()
         return super().form_valid(form)
 
 
-
 class PostDetailView(DetailView):
     model = models.Post
-    template_name='blog/comments.html'
+    template_name = 'blog/comments.html'
 
 
 class PostDeleteView(DeleteView):
     model = models.Post
-    template_name='blog/delete_post.html'
-    success_url=reverse_lazy('index')
+    template_name = 'blog/delete_post.html'
+    success_url = reverse_lazy('home')
 
 
 class CommentDeleteView(DeleteView):
     model = models.Comment
-    template_name='blog/delete_comment.html'
-    success_url=reverse_lazy('index')
-
+    template_name = 'blog/delete_comment.html'
+    success_url = reverse_lazy('home')
 
 
 def register(request: HttpRequest):
@@ -94,7 +98,7 @@ def register(request: HttpRequest):
             user = form.save()
             login(request, user)
             # messages.success(request, "Регистрация прошла успешно")
-            return redirect('index')
+            return redirect('home')
 
         # messages.error(request, "Неудачная регистрация. Неправильные данные")
     form = forms.CustomUserCreationForm()

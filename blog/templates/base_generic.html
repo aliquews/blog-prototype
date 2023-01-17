@@ -12,6 +12,7 @@
   <!-- Добавление дополнительного статического CSS файла -->
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <script src="{% static 'reconnecting-websocket.js' %}"></script>
 </head>
 
 <body>
@@ -21,10 +22,10 @@
           <div class="col-sm-2">
           {% block sidebar %}
           <ul class="sidebar-nav">
-              <li><strong><a href="{% url 'index' %}">Главная страница</a></strong></li>
+              <li><strong><a href="{% url 'home' %}">Главная страница</a></strong></li>
             {% if user.is_authenticated %}
               <li><strong><a href="{% url 'user-detail' user.username %}">Мой блог</a></strong></li>
-              <li><strong><a href="">Сообщения</a></strong></li>
+              <li><strong><a href="{% url 'index' %}">Сообщения</a></strong></li>
               <li><strong><a href="{% url 'users' %}">Найти людей</a></strong></li>
               <li><strong><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></strong></li>
             {% else %}

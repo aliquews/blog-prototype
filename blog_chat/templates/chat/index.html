@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+{% block content %}
+    <h1>Сообщения</h1>
+    {% for chat in chat_list %}
+    {% if user.username == chat.user1.username or user.username == chat.user2.username %}
+        <div class="message_block">
+            {% if user.username != chat.user1.username %}
+                <strong><a href="{% url 'room' chat.id %}">{{chat.user1}}</a></strong>
+            {% else %}
+                <strong><a href="{% url 'room' chat.id %}">{{chat.user2}}</a></strong>
+            {% endif %}
+        </div>
+    {% endif %}
+    {% endfor %}
+{% endblock %}

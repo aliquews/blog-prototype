@@ -1,0 +1,17 @@
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+.delete {
+    padding: -30%;
+}
+.message_block {
+    width: 900px;
+    background: rgb(202, 202, 202);
+    padding: auto;
+    padding-right: 20px;
+    border: solid 1px black;
+    float:inline-start;
+    margin-bottom: 5px;
+}
