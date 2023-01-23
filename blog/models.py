@@ -5,10 +5,11 @@ from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
 
-    username = models.CharField(max_length=32, unique=True)
-    email = models.EmailField(max_length=32)
-    first_name = models.CharField(max_length=32)
-    last_name = models.CharField(max_length=32)
+    username = models.CharField(max_length=32, unique=True, help_text='Никнейм')
+    email = models.EmailField(max_length=32, help_text='Электронная почта')
+    first_name = models.CharField(max_length=32, help_text='Имя')
+    last_name = models.CharField(max_length=32, help_text='Фамилия')
+    avatar = models.ImageField('profile avatar', null=True, upload_to=f'uploads/{username}/', help_text='Аватар')
 
 
     def __str__(self) -> str:

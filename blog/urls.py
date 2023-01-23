@@ -11,5 +11,6 @@ urlpatterns = [
     re_path(r'^post/(?P<pk>\d+)/delete$', views.PostDeleteView.as_view(), name='delete-post'),
     re_path(r'^post/comment/new/(?P<pk>\d+)$', views.CommentCreateView.as_view(), name='new-comment'),
     re_path(r'^comment/(?P<pk>\d+)/delete$', views.CommentDeleteView.as_view(), name='delete-comment'),
+    re_path(r'^author/(?P<slug>[-\w]+)/edit/$', views.edit_profile, name='edit-user'),
     path("register", views.register, name="register"),
 ]

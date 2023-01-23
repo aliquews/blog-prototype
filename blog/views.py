@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
-from django.views.generic import DetailView, ListView, CreateView, DeleteView
+from django.views.generic import DetailView, ListView, CreateView, DeleteView, FormView
 from django.urls import reverse_lazy
 from django.contrib.auth import login
 
@@ -89,6 +89,17 @@ class CommentDeleteView(DeleteView):
     model = models.Comment
     template_name = 'blog/delete_comment.html'
     success_url = reverse_lazy('home')
+
+
+def edit_profile(request: HttpRequest, slug):
+    if request.method == "POST":
+        form = forms.CustomUserChangeForm(request.POST)
+        if form.is_valid():
+            form.renderer()
+            return redirect('home')
+        
+    form = forms.CustomUserChangeForm()
+    return render(request, template_name='blog/edit_profile.html', context={'edit_form': form})
 
 
 def register(request: HttpRequest):
